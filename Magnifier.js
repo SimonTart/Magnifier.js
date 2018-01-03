@@ -10,16 +10,81 @@
 * Attachment of user defined functions for thumbnail entering, moving and leaving and image zooming events
 * Display loading text while the large image is being loaded, and switch to lens once its loaded
 *
-* Magnifier.js uses Event.js as a cross-browser event handling wrapper, which is available at
 * Github and JSClasses.org:
 *
-* Github - https://github.com/mark-rolich/Event.js
 * JS Classes - http://www.jsclasses.org/package/212-JavaScript-Handle-events-in-a-browser-independent-manner.html
 *
 * Works in Chrome, Firefox, Safari, IE 7, 8, 9 & 10.
 *
 * @author Mark Rolich <mark.rolich@gmail.com>
 */
+
+/**
+*
+* - Allows registering and unregistering of event handlers
+* - Injects event object and involved DOM element to listener
+*
+* @author Mark Rolich <mark.rolich@gmail.com>
+*/
+var Event = function () {
+    "use strict";
+    this.attach = function (evtName, element, listener, capture) {
+        var evt         = '',
+            useCapture  = (capture === undefined) ? true : capture,
+            handler     = null;
+
+        if (window.addEventListener === undefined) {
+            evt = 'on' + evtName;
+            handler = function (evt, listener) {
+                element.attachEvent(evt, listener);
+                return listener;
+            };
+        } else {
+            evt = evtName;
+            handler = function (evt, listener, useCapture) {
+                element.addEventListener(evt, listener, useCapture);
+                return listener;
+            };
+        }
+
+        return handler.apply(element, [evt, function (ev) {
+            var e   = ev || event,
+                src = e.srcElement || e.target;
+
+            listener(e, src);
+        }, useCapture]);
+    };
+
+    this.detach = function (evtName, element, listener, capture) {
+        var evt         = '',
+            useCapture  = (capture === undefined) ? true : capture;
+
+        if (window.removeEventListener === undefined) {
+            evt = 'on' + evtName;
+            element.detachEvent(evt, listener);
+        } else {
+            evt = evtName;
+            element.removeEventListener(evt, listener, useCapture);
+        }
+    };
+
+    this.stop = function (evt) {
+        evt.cancelBubble = true;
+
+        if (evt.stopPropagation) {
+            evt.stopPropagation();
+        }
+    };
+
+    this.prevent = function (evt) {
+        if (evt.preventDefault) {
+            evt.preventDefault();
+        } else {
+            evt.returnValue = false;
+        }
+    };
+};
+
 var Magnifier = function (evt, options) {
     "use strict";
 
@@ -588,3 +653,5 @@ var Magnifier = function (evt, options) {
         }
     });
 };
+
+export default Magnifier;

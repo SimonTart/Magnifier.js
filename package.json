@@ -1,0 +1,19 @@
+{
+  "name": "magnifier",
+  "version": "1.0.0",
+  "description": "Magnifier.js =================",
+  "main": "Magnifier.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimonTart/Magnifier.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimonTart/Magnifier.js/issues"
+  },
+  "homepage": "https://github.com/SimonTart/Magnifier.js#readme"
+}
