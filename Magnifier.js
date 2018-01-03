@@ -26,6 +26,9 @@
 *
 * @author Mark Rolich <mark.rolich@gmail.com>
 */
+
+import 'magnifier.css';
+
 var Event = function () {
     "use strict";
     this.attach = function (evtName, element, listener, capture) {
