@@ -30,7 +30,6 @@
 import './magnifier.css';
 
 var Event = function () {
-    "use strict";
     this.attach = function (evtName, element, listener, capture) {
         var evt         = '',
             useCapture  = (capture === undefined) ? true : capture,
@@ -88,8 +87,7 @@ var Event = function () {
     };
 };
 
-var Magnifier = function (evt, options) {
-    "use strict";
+var Magnifier = function (evt = evt, options) {
 
     var gOptions = options || {},
         curThumb = null,
@@ -656,5 +654,6 @@ var Magnifier = function (evt, options) {
         }
     });
 };
+var evt = new Event();
 
-export default Magnifier;
+export default new Magnifier(evt);
