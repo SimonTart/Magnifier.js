@@ -27,7 +27,7 @@
 * @author Mark Rolich <mark.rolich@gmail.com>
 */
 
-import 'magnifier.css';
+import './magnifier.css';
 
 var Event = function () {
     "use strict";
